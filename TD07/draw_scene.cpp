@@ -52,6 +52,7 @@ void initScene() {
 	frame.changeNature(GL_LINES);
 	}
 	initGrille();
+	initCurved();
 	{
 	std::vector<float> baseCarre{-50.0,-50.0,0.0,
 								 50.0,-50.0,0.0,
@@ -98,6 +99,7 @@ void drawGround(){
 	myEngine.mvMatrixStack.addTranslation({0.0f,0.0f,-0.1f});
 	myEngine.updateMvMatrix();
 	myEngine.setFlatColor(0.2,0.8,0.2);
+	ground.changeNature(GL_LINES);
 	ground.drawShape();
 	myEngine.mvMatrixStack.popMatrix(); 
 }
@@ -111,11 +113,13 @@ void drawScene() {
 
 	drawFrame();
 
-	myEngine.mvMatrixStack.pushMatrix(); // Base
-	//myEngine.mvMatrixStack.addTranslation({0.0f,0.0f,0.1f});
+	myEngine.mvMatrixStack.pushMatrix(); // rails
+	myEngine.mvMatrixStack.addTranslation({0.0f,-10.0f,0.0f});
 	myEngine.updateMvMatrix();
 	drawStraightRail();
-	myEngine.mvMatrixStack.popMatrix(); // base
+	myEngine.mvMatrixStack.popMatrix(); // rails
+	myEngine.updateMvMatrix();
+	drawCurvedRail();
 
 
 	drawGround();
