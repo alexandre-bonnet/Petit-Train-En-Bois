@@ -7,6 +7,6 @@
 
 using namespace glbasimac;
 
-
 void drawStraightRail();
-
+void drawCurvedRail();
+void initCurved();
