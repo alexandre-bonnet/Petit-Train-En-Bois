@@ -4,7 +4,7 @@
 /// Camera parameters
 float angle_theta {45.0};      // Angle between x axis and viewpoint
 float angle_phy {30.0};      // Angle between z axis and viewpoint
-float dist_zoom {30.0};      // Distance between origin and viewpoint
+float dist_zoom {15.0};      // Distance between origin and viewpoint
 
 GLBI_Engine myEngine;
 
@@ -15,6 +15,7 @@ GLBI_Convex_2D_Shape cercle{3};
 
 IndexedMesh* sphere;
 IndexedMesh* cylindre;
+IndexedMesh* cube;
 StandardMesh* cone;
 
 void initGrille(){
@@ -61,7 +62,7 @@ void initScene() {
 	}
 	{
 	std::vector<float> points_cercle;
-	int nb_points = 10;
+	int nb_points = 25;
 	for (int i = 0; i <= nb_points; i++)
 	{
 		float angle = 2 * M_PI / nb_points;
@@ -84,9 +85,13 @@ void initScene() {
 	cylindre = basicCylinder(1.f,1.f);
 	cylindre->createVAO();
 	}
+	{
+	cube = basicCube();
+	cube->createVAO();
+	}
 }
 
-void drawDround(){
+void drawGround(){
 	myEngine.updateMvMatrix();
 	grille.drawSet();
 	myEngine.mvMatrixStack.pushMatrix();
@@ -101,7 +106,6 @@ void drawFrame() {
 	frame.drawSet();
 }
 
-
 void drawScene() {
 	glPointSize(10.0);
 
@@ -114,5 +118,5 @@ void drawScene() {
 	myEngine.mvMatrixStack.popMatrix(); // base
 
 
-	drawDround();
+	drawGround();
 }

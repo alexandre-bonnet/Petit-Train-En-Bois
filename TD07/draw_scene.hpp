@@ -25,6 +25,7 @@ extern GLBI_Convex_2D_Shape cercle;
 
 extern IndexedMesh* sphere;
 extern IndexedMesh* cylindre;
+extern IndexedMesh* cube;
 extern StandardMesh* cone;
 
 

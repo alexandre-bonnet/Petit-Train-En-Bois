@@ -7,6 +7,5 @@
 
 using namespace glbasimac;
 
-
 void drawStraightRail();
 
