@@ -99,8 +99,8 @@ void drawGround(){
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation({0.0f,0.0f,-0.1f});
 	myEngine.updateMvMatrix();
-	myEngine.setFlatColor(0.2,0.8,0.2);
-	ground.changeNature(GL_LINES);
+	myEngine.setFlatColor(0.2,0.5,0.2);
+	ground.changeNature(GL_TRIANGLE_FAN);
 	ground.drawShape();
 	myEngine.mvMatrixStack.popMatrix(); 
 }
@@ -114,6 +114,13 @@ void drawScene() {
 
 	drawFrame();
 
+	drawRails();
+	
+	
+	drawGround();
+}
+
+void temp(){
 	myEngine.mvMatrixStack.pushMatrix(); // rails
 	myEngine.mvMatrixStack.addTranslation({0.0f,-10.0f,0.0f});
 	myEngine.updateMvMatrix();
@@ -122,6 +129,4 @@ void drawScene() {
 	myEngine.updateMvMatrix();
 	drawCurvedRail();
 
-
-	drawGround();
 }

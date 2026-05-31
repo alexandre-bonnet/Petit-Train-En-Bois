@@ -16,3 +16,4 @@ void drawStraightRail();
 void drawCurvedRail();
 void initCurved();
 void jsonInit();
+void drawRails();
