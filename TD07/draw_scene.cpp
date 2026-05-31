@@ -90,6 +90,7 @@ void initScene() {
 	cube = basicCube();
 	cube->createVAO();
 	}
+	jsonInit();
 }
 
 void drawGround(){

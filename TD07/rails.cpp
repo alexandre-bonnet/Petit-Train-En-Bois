@@ -18,7 +18,7 @@ GLBI_Convex_2D_Shape outRailFar{3};
 
 void drawBalast();
 
-void drawStraightRail() {
+void drawStraightRail(){
 	
 	myEngine.mvMatrixStack.pushMatrix(); // all
 	//CUBE placed at origin to help orientation
@@ -170,4 +170,13 @@ void initCurved(){
 	outRailFar.initShape(outRailFarVector);
 	outRailFar.changeNature(GL_TRIANGLE_STRIP);
 	
+}
+
+void jsonInit(){
+	 std::ifstream file("../assets/RailPlacement.json");
+
+    if (!file) {
+        std::cerr << "Impossible d'ouvrir ou de trouver le fichier json\n";
+        return;
+    }
 }
