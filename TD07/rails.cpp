@@ -15,16 +15,15 @@ GLBI_Convex_2D_Shape outRailBottom{3};
 GLBI_Convex_2D_Shape outRailNear{3};
 GLBI_Convex_2D_Shape outRailFar{3};
 
+std::array<int,2> stationPlacement{};
+std::vector<std::array<int,2>> railsPlacement{};
+
 
 void drawBalast();
 
 void drawStraightRail(){
 	
 	myEngine.mvMatrixStack.pushMatrix(); // all
-	//CUBE placed at origin to help orientation
-	myEngine.setFlatColor(0.0,0.0,0.0);
-	myEngine.updateMvMatrix();
-	cube->draw();
 	myEngine.setFlatColor(0.7,0.7,0.7);
 	
 	for(int i = 3; i <8;i+=4){
@@ -50,10 +49,6 @@ void drawStraightRail(){
 void drawCurvedRail() {
 	
 	myEngine.mvMatrixStack.pushMatrix(); // all
-	//CUBE placed at origin to help orientation
-	myEngine.setFlatColor(0.0,0.0,0.0);
-	myEngine.updateMvMatrix();
-	cube->draw();
 
 	myEngine.mvMatrixStack.pushMatrix(); // rails
 	myEngine.setFlatColor(0.7,0.7,0.7);
@@ -176,7 +171,65 @@ void jsonInit(){
 	 std::ifstream file("../assets/RailPlacement.json");
 
     if (!file) {
-        std::cerr << "Impossible d'ouvrir ou de trouver le fichier json\n";
+        std::cout << "Impossible d'ouvrir ou de trouver le fichier json"<<std::endl;
         return;
     }
+
+	json data;
+    file >> data;
+
+	stationPlacement = data["origin"].get<std::array<int,2>>();
+	std::cout << "la station est en " << stationPlacement[0] <<"," << stationPlacement[1]<<std::endl;
+
+	railsPlacement = data["path"].get<std::vector<std::array<int,2>>>();
+}
+
+void drawRails(){
+	bool curved{false};
+	int size{railsPlacement.size()};
+	float angle{0.f};
+	for (int i = 0; i<size;i++) {
+		std::array<int,2> current = railsPlacement[i];
+		std::array<int,2> prev = railsPlacement[(i - 1 + size) % size];
+		std::array<int,2> next = railsPlacement[(i + 1) % size];
+
+		if(prev[0]!=next[0]&&prev[1]!=next[1]){ 
+			curved = true; 
+		}
+		if(curved){
+			if (prev[1]<current[1]&&current[0]>next[0]){  
+				angle = 0.f;
+			}  //ok
+			if (prev[0]>current[0]&&current[1]>next[1]){  
+				angle = M_PI_2;
+			}  
+			if ((prev[1]>current[1]&&current[0]>next[0])||(prev[0]<current[0]&&current[1]<next[1])){  
+				angle = -M_PI_2;
+			}  
+			if (prev[1]>current[1]&&current[0]<next[0]){  
+				angle = M_PI;
+			} 
+		} else {
+			if(prev[1]==current[1]){
+				angle = M_PI_2;
+			} else if(prev[0]==current[0]){
+				angle = 0.f;
+			}
+		}
+
+		myEngine.mvMatrixStack.pushMatrix(); // all
+		myEngine.mvMatrixStack.addTranslation({10.f*railsPlacement[i][0],10.f*railsPlacement[i][1],0.f});
+		myEngine.mvMatrixStack.addTranslation({5.f,5.f,0.f});
+		myEngine.mvMatrixStack.addRotation(angle,{0.0,0.0,1.0});
+
+		myEngine.mvMatrixStack.addTranslation({-5.f,-5.f,0.f});
+		myEngine.updateMvMatrix();
+		if(curved){
+			drawCurvedRail();
+		} else {
+			drawStraightRail();
+		}
+		curved = false;
+		myEngine.mvMatrixStack.popMatrix(); // all
+	}
 }
