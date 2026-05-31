@@ -19,7 +19,29 @@ std::array<int,2> stationPlacement{};
 std::vector<std::array<int,2>> railsPlacement{};
 
 
-void drawBalast();
+void drawBalast(){
+	myEngine.mvMatrixStack.pushMatrix(); // balast
+		myEngine.mvMatrixStack.addTranslation({0.0,0.0,rr});
+		myEngine.mvMatrixStack.addRotation(-M_PI_2,{0.0,0.0,1.0});
+		myEngine.mvMatrixStack.pushMatrix(); // cylindre
+			myEngine.mvMatrixStack.addHomothety({rr,6.0,rr});
+			myEngine.updateMvMatrix();
+			cylindre->draw();
+		myEngine.mvMatrixStack.popMatrix(); // cylindre
+		myEngine.mvMatrixStack.pushMatrix(); // cerlcles
+			myEngine.mvMatrixStack.addRotation(-M_PI_2,{1.0,0.0,0.0});
+			myEngine.mvMatrixStack.pushMatrix(); // cerlcle1
+				myEngine.mvMatrixStack.addHomothety({rr,rr,1.0});
+				myEngine.updateMvMatrix();
+				cercle.drawShape();
+			myEngine.mvMatrixStack.popMatrix(); // cercle1
+			myEngine.mvMatrixStack.addTranslation({0.0,0.0,6.0});
+			myEngine.mvMatrixStack.addHomothety({rr,rr,1.0});
+			myEngine.updateMvMatrix();
+			cercle.drawShape();
+		myEngine.mvMatrixStack.popMatrix(); // cerlcles
+	myEngine.mvMatrixStack.popMatrix(); // balast
+}
 
 void drawStraightRail(){
 	
@@ -76,33 +98,9 @@ void drawCurvedRail() {
 	myEngine.mvMatrixStack.popMatrix(); // all
 }
 
-void drawBalast(){
-	myEngine.mvMatrixStack.pushMatrix(); // balast
-		myEngine.mvMatrixStack.addTranslation({0.0,0.0,rr});
-		myEngine.mvMatrixStack.addRotation(-M_PI_2,{0.0,0.0,1.0});
-		myEngine.mvMatrixStack.pushMatrix(); // cylindre
-			myEngine.mvMatrixStack.addHomothety({rr,6.0,rr});
-			myEngine.updateMvMatrix();
-			cylindre->draw();
-		myEngine.mvMatrixStack.popMatrix(); // cylindre
-		myEngine.mvMatrixStack.pushMatrix(); // cerlcles
-			myEngine.mvMatrixStack.addRotation(-M_PI_2,{1.0,0.0,0.0});
-			myEngine.mvMatrixStack.pushMatrix(); // cerlcle1
-				myEngine.mvMatrixStack.addHomothety({rr,rr,1.0});
-				myEngine.updateMvMatrix();
-				cercle.drawShape();
-			myEngine.mvMatrixStack.popMatrix(); // cercle1
-			myEngine.mvMatrixStack.addTranslation({0.0,0.0,6.0});
-			myEngine.mvMatrixStack.addHomothety({rr,rr,1.0});
-			myEngine.updateMvMatrix();
-			cercle.drawShape();
-		myEngine.mvMatrixStack.popMatrix(); // cerlcles
-	myEngine.mvMatrixStack.popMatrix(); // balast
-}
-
 void initCurved(){
 
-	int num = 5;
+	int num = 7;
 	std::vector<float> inRailTopVector{};
 	std::vector<float> inRailBottomVector{};
 	std::vector<float> inRailNearVector{};
@@ -167,7 +165,7 @@ void initCurved(){
 	
 }
 
-void jsonInit(){
+void initJson(){
 	 std::ifstream file("../assets/RailPlacement.json");
 
     if (!file) {
@@ -179,7 +177,6 @@ void jsonInit(){
     file >> data;
 
 	stationPlacement = data["origin"].get<std::array<int,2>>();
-	std::cout << "la station est en " << stationPlacement[0] <<"," << stationPlacement[1]<<std::endl;
 
 	railsPlacement = data["path"].get<std::vector<std::array<int,2>>>();
 }
@@ -188,25 +185,29 @@ void drawRails(){
 	bool curved{false};
 	int size{railsPlacement.size()};
 	float angle{0.f};
+	std::array<int,2> current{};
+	std::array<int,2> prev{};
+	std::array<int,2> next{};
 	for (int i = 0; i<size;i++) {
-		std::array<int,2> current = railsPlacement[i];
-		std::array<int,2> prev = railsPlacement[(i - 1 + size) % size];
-		std::array<int,2> next = railsPlacement[(i + 1) % size];
+		current = railsPlacement[i];
+		prev = railsPlacement[(i - 1 + size) % size];
+		next = railsPlacement[(i + 1) % size];
 
 		if(prev[0]!=next[0]&&prev[1]!=next[1]){ 
 			curved = true; 
 		}
+
 		if(curved){
-			if (prev[1]<current[1]&&current[0]>next[0]){  
+			if ((prev[1]<current[1]&&current[0]>next[0])||(prev[0]>current[0]&&current[1]<next[1])){  
 				angle = 0.f;
-			}  //ok
-			if (prev[0]>current[0]&&current[1]>next[1]){  
+			}
+			if ((prev[0]>current[0]&&current[1]>next[1])||(prev[1]<current[1]&&current[0]<next[0])){  
 				angle = M_PI_2;
 			}  
 			if ((prev[1]>current[1]&&current[0]>next[0])||(prev[0]<current[0]&&current[1]<next[1])){  
 				angle = -M_PI_2;
 			}  
-			if (prev[1]>current[1]&&current[0]<next[0]){  
+			if ((prev[1]>current[1]&&current[0]<next[0])||(prev[0]<current[0]&&current[1]>next[1])){  
 				angle = M_PI;
 			} 
 		} else {
@@ -218,10 +219,10 @@ void drawRails(){
 		}
 
 		myEngine.mvMatrixStack.pushMatrix(); // all
-		myEngine.mvMatrixStack.addTranslation({10.f*railsPlacement[i][0],10.f*railsPlacement[i][1],0.f});
+		myEngine.mvMatrixStack.addTranslation({10.f*current[0],10.f*current[1],0.f});
+
 		myEngine.mvMatrixStack.addTranslation({5.f,5.f,0.f});
 		myEngine.mvMatrixStack.addRotation(angle,{0.0,0.0,1.0});
-
 		myEngine.mvMatrixStack.addTranslation({-5.f,-5.f,0.f});
 		myEngine.updateMvMatrix();
 		if(curved){
@@ -229,7 +230,8 @@ void drawRails(){
 		} else {
 			drawStraightRail();
 		}
-		curved = false;
 		myEngine.mvMatrixStack.popMatrix(); // all
+
+		curved = false;
 	}
 }

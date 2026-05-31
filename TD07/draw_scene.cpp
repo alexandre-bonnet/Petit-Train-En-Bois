@@ -32,8 +32,7 @@ void initGrille(){
 	grille.changeNature(GL_LINES);
 }
 
-void initScene() {
-	{
+void initFrame(){
 	std::vector<float> pointsFrame{0.0,0.0,0.0,
 							 50.0,0.0,0.0,
 							 0.0,0.0,0.0,
@@ -50,9 +49,9 @@ void initScene() {
 
 	frame.initSet(pointsFrame,frameColors);
 	frame.changeNature(GL_LINES);
-	}
-	initGrille();
-	initCurved();
+}
+
+void initConvex2dShapes(){
 	{
 	std::vector<float> baseCarre{-50.0,-50.0,0.0,
 								 50.0,-50.0,0.0,
@@ -74,6 +73,9 @@ void initScene() {
 	cercle.initShape(points_cercle);
 	cercle.changeNature(GL_TRIANGLE_FAN);
 	}
+}
+
+void initMeshes(){
 	{
 	sphere = basicSphere();
 	sphere->createVAO();
@@ -90,7 +92,15 @@ void initScene() {
 	cube = basicCube();
 	cube->createVAO();
 	}
-	jsonInit();
+}
+
+void initScene() {
+	initFrame();
+	initGrille();
+	initCurved();
+	initJson();
+	initConvex2dShapes();
+	initMeshes();
 }
 
 void drawGround(){
@@ -113,20 +123,6 @@ void drawScene() {
 	glPointSize(10.0);
 
 	drawFrame();
-
 	drawRails();
-	
-	
 	drawGround();
-}
-
-void temp(){
-	myEngine.mvMatrixStack.pushMatrix(); // rails
-	myEngine.mvMatrixStack.addTranslation({0.0f,-10.0f,0.0f});
-	myEngine.updateMvMatrix();
-	drawStraightRail();
-	myEngine.mvMatrixStack.popMatrix(); // rails
-	myEngine.updateMvMatrix();
-	drawCurvedRail();
-
 }

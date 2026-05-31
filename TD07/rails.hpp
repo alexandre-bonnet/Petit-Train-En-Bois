@@ -15,5 +15,5 @@ using json = nlohmann::json;
 void drawStraightRail();
 void drawCurvedRail();
 void initCurved();
-void jsonInit();
+void initJson();
 void drawRails();
