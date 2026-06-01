@@ -7,3 +7,4 @@
 
 
 void drawTrain();
+void initRamp();
