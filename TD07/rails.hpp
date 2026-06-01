@@ -9,11 +9,13 @@
 #include <fstream>
 #include <iostream>
 
+extern float sr;
+extern float rr;
+extern float sx;
+
 using namespace glbasimac;
 using json = nlohmann::json;
 
-void drawStraightRail();
-void drawCurvedRail();
+
 void initCurved();
-void initJson();
 void drawRails();

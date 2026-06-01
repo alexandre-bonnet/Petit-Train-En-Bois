@@ -5,6 +5,7 @@
 #include "glbasimac/glbi_convex_2D_shape.hpp"
 #include "tools/basic_mesh.hpp"
 
+
 using namespace glbasimac;
 
 /* Camera parameters and functions */
@@ -28,6 +29,10 @@ extern IndexedMesh* cylindre;
 extern IndexedMesh* cube;
 extern StandardMesh* cone;
 
+extern std::array<int,2> stationPlacement;
+extern std::vector<std::array<int,2>> railsPlacement;
+
+void initJson();
 
 void initScene();
 

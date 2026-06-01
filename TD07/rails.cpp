@@ -15,9 +15,6 @@ GLBI_Convex_2D_Shape outRailBottom{3};
 GLBI_Convex_2D_Shape outRailNear{3};
 GLBI_Convex_2D_Shape outRailFar{3};
 
-std::array<int,2> stationPlacement{};
-std::vector<std::array<int,2>> railsPlacement{};
-
 
 void drawBalast(){
 	myEngine.mvMatrixStack.pushMatrix(); // balast
@@ -165,21 +162,6 @@ void initCurved(){
 	
 }
 
-void initJson(){
-	 std::ifstream file("../assets/RailPlacement.json");
-
-    if (!file) {
-        std::cout << "Impossible d'ouvrir ou de trouver le fichier json"<<std::endl;
-        return;
-    }
-
-	json data;
-    file >> data;
-
-	stationPlacement = data["origin"].get<std::array<int,2>>();
-
-	railsPlacement = data["path"].get<std::vector<std::array<int,2>>>();
-}
 
 void drawRails(){
 	bool curved{false};
@@ -198,16 +180,16 @@ void drawRails(){
 		}
 
 		if(curved){
-			if ((prev[1]<current[1]&&current[0]>next[0])||(prev[0]>current[0]&&current[1]<next[1])){  
+			if ((prev[1]<current[1]&&current[0]>next[0])||(prev[0]<current[0]&&current[1]>next[1])){  
 				angle = 0.f;
 			}
 			if ((prev[0]>current[0]&&current[1]>next[1])||(prev[1]<current[1]&&current[0]<next[0])){  
 				angle = M_PI_2;
-			}  
+			}  //ok
 			if ((prev[1]>current[1]&&current[0]>next[0])||(prev[0]<current[0]&&current[1]<next[1])){  
 				angle = -M_PI_2;
 			}  
-			if ((prev[1]>current[1]&&current[0]<next[0])||(prev[0]<current[0]&&current[1]>next[1])){  
+			if ((prev[1]>current[1]&&current[0]<next[0])||(prev[0]>current[0]&&current[1]<next[1])){  
 				angle = M_PI;
 			} 
 		} else {

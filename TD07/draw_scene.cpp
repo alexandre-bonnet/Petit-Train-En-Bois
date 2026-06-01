@@ -1,5 +1,7 @@
 #include "draw_scene.hpp"
 #include "rails.hpp"
+#include "gare.hpp"
+#include "train.hpp"
 
 /// Camera parameters
 float angle_theta {45.0};      // Angle between x axis and viewpoint
@@ -17,6 +19,9 @@ IndexedMesh* sphere;
 IndexedMesh* cylindre;
 IndexedMesh* cube;
 StandardMesh* cone;
+
+std::array<int,2> stationPlacement{};
+std::vector<std::array<int,2>> railsPlacement{};
 
 void initGrille(){
 	std::vector<float> grilleFrame{};
@@ -94,6 +99,23 @@ void initMeshes(){
 	}
 }
 
+void initJson(){
+	std::ifstream file("../assets/RailPlacement.json");
+	//std::ifstream file("../assets/AlternativeRailPlacement.json");
+
+    if (!file) {
+        std::cout << "Impossible d'ouvrir ou de trouver le fichier json"<<std::endl;
+        return;
+    }
+
+	json data;
+    file >> data;
+
+	stationPlacement = data["origin"].get<std::array<int,2>>();
+
+	railsPlacement = data["path"].get<std::vector<std::array<int,2>>>();
+}
+
 void initScene() {
 	initFrame();
 	initGrille();
@@ -123,6 +145,10 @@ void drawScene() {
 	glPointSize(10.0);
 
 	drawFrame();
+	
 	drawRails();
+	drawStation();
+	drawTrain();
+
 	drawGround();
 }
