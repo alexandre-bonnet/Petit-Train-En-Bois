@@ -141,6 +141,23 @@ void drawFrame() {
 	frame.drawSet();
 }
 
+void drawClosedCylinder(){
+	myEngine.mvMatrixStack.pushMatrix(); // all
+	myEngine.updateMvMatrix();
+	cylindre->draw();
+	myEngine.mvMatrixStack.pushMatrix(); // cerlcles
+			myEngine.mvMatrixStack.addRotation(-M_PI_2,{1.0,0.0,0.0});
+			myEngine.mvMatrixStack.pushMatrix(); // cerlcle1
+				myEngine.updateMvMatrix();
+				cercle.drawShape();
+			myEngine.mvMatrixStack.popMatrix(); // cercle1
+			myEngine.mvMatrixStack.addTranslation({0.0,0.0,1.0});
+			myEngine.updateMvMatrix();
+			cercle.drawShape();
+		myEngine.mvMatrixStack.popMatrix(); // cerlcles
+	myEngine.mvMatrixStack.popMatrix(); // all
+}
+
 void drawScene() {
 	glPointSize(10.0);
 

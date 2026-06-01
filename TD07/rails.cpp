@@ -20,23 +20,9 @@ void drawBalast(){
 	myEngine.mvMatrixStack.pushMatrix(); // balast
 		myEngine.mvMatrixStack.addTranslation({0.0,0.0,rr});
 		myEngine.mvMatrixStack.addRotation(-M_PI_2,{0.0,0.0,1.0});
-		myEngine.mvMatrixStack.pushMatrix(); // cylindre
 			myEngine.mvMatrixStack.addHomothety({rr,6.0,rr});
 			myEngine.updateMvMatrix();
-			cylindre->draw();
-		myEngine.mvMatrixStack.popMatrix(); // cylindre
-		myEngine.mvMatrixStack.pushMatrix(); // cerlcles
-			myEngine.mvMatrixStack.addRotation(-M_PI_2,{1.0,0.0,0.0});
-			myEngine.mvMatrixStack.pushMatrix(); // cerlcle1
-				myEngine.mvMatrixStack.addHomothety({rr,rr,1.0});
-				myEngine.updateMvMatrix();
-				cercle.drawShape();
-			myEngine.mvMatrixStack.popMatrix(); // cercle1
-			myEngine.mvMatrixStack.addTranslation({0.0,0.0,6.0});
-			myEngine.mvMatrixStack.addHomothety({rr,rr,1.0});
-			myEngine.updateMvMatrix();
-			cercle.drawShape();
-		myEngine.mvMatrixStack.popMatrix(); // cerlcles
+			drawClosedCylinder();
 	myEngine.mvMatrixStack.popMatrix(); // balast
 }
 

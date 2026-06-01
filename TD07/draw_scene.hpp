@@ -4,9 +4,11 @@
 #include "glbasimac/glbi_set_of_points.hpp"
 #include "glbasimac/glbi_convex_2D_shape.hpp"
 #include "tools/basic_mesh.hpp"
+#include "json.hpp"
 
 
 using namespace glbasimac;
+using json = nlohmann::json;
 
 /* Camera parameters and functions */
 static const float Z_NEAR {0.1f};
@@ -37,6 +39,7 @@ void initJson();
 void initScene();
 
 void drawFrame();
+void drawClosedCylinder();
 
 void drawScene();
 
