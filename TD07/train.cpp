@@ -26,16 +26,13 @@ void drawWheels(){
 	myEngine.mvMatrixStack.addRotation(-M_PI_2,{0.0,0.0,1.0});
 	for(int i = 3;i<8; i+=4){
 		myEngine.mvMatrixStack.pushMatrix(); //Wheel
-		myEngine.mvMatrixStack.addTranslation({-1.f,float(i)-sr/2,0.5});
+		myEngine.mvMatrixStack.addTranslation({-1.f,float(i)-0.25,0.5});
 		myEngine.mvMatrixStack.addHomothety(0.5);
-		myEngine.updateMvMatrix();
-		drawWheel();
-		myEngine.mvMatrixStack.addTranslation({-4.f,0.f,0.f});
-		myEngine.updateMvMatrix();
-		drawWheel();
-		myEngine.mvMatrixStack.addTranslation({-8.f,0.f,0.f});
-		myEngine.updateMvMatrix();
-		drawWheel();
+		for(int i = 0; i<9;i+=4){
+			myEngine.mvMatrixStack.addTranslation({-float(i),0.f,0.f});
+			myEngine.updateMvMatrix();
+			drawWheel();
+		}
 		myEngine.mvMatrixStack.popMatrix(); //Wheel
 	}
 	myEngine.mvMatrixStack.popMatrix(); // all
@@ -88,25 +85,246 @@ void drawRamp(){
 	myEngine.mvMatrixStack.popMatrix(); // all
 }
 
-void drawTrain(){
+void drawGrate(){
+	for(int i{-1};i<2;i+=2){
+		myEngine.mvMatrixStack.pushMatrix(); // top/bottom
+		myEngine.mvMatrixStack.addTranslation({0.f,0.f,float(i)*0.2f});
+		myEngine.mvMatrixStack.addHomothety({2.f,0.1f,0.1f});
+		myEngine.updateMvMatrix();
+		cube->draw();
+		myEngine.mvMatrixStack.popMatrix(); // top/bottom
+	}
+	for(int i{-4};i<5;i++){
+		myEngine.mvMatrixStack.pushMatrix(); // straight
+		myEngine.mvMatrixStack.addTranslation({float(i)*0.25f,0.f,0.f});
+		myEngine.mvMatrixStack.addHomothety({0.1f,0.1f,0.5f});
+		myEngine.updateMvMatrix();
+		cube->draw();
+		myEngine.mvMatrixStack.popMatrix(); // straight
+	}
+}
+
+void drawCabin(){
+	myEngine.mvMatrixStack.pushMatrix(); // all
+	myEngine.mvMatrixStack.addTranslation({5.f,2.25f,2.f});
+	for(int i{1};i<4;i++){
+		myEngine.mvMatrixStack.pushMatrix(); // bordure
+		myEngine.mvMatrixStack.addRotation(M_PI_2*i,{0.0,0.0,1.0});
+		myEngine.mvMatrixStack.addTranslation({0.f,1.5f,0.f});
+		myEngine.mvMatrixStack.addHomothety({3.5f,0.5f,1.f});
+		myEngine.updateMvMatrix();
+		cube->draw();
+		myEngine.mvMatrixStack.popMatrix(); // bordure
+	} 
+	myEngine.mvMatrixStack.addTranslation({0.f,0.f,1.f});
+	for(int i{-1};i<2;i+=2){
+		for(int j{-1};j<2;j+=2){
+		myEngine.mvMatrixStack.pushMatrix(); // poteau
+		myEngine.mvMatrixStack.addTranslation({1.5f*i,1.5f*j,0.f});
+		myEngine.mvMatrixStack.addHomothety({0.5f,0.5f,3.f});
+		myEngine.updateMvMatrix();
+		cube->draw();
+		myEngine.mvMatrixStack.popMatrix(); // poteau
+		}
+	}
+	myEngine.mvMatrixStack.popMatrix(); // all
+}
+
+void drawPerso(){
+	myEngine.mvMatrixStack.pushMatrix(); // all
+	for(int i{-1};i<2;i+=2){
+		myEngine.mvMatrixStack.pushMatrix(); // Bottom
+		myEngine.mvMatrixStack.addTranslation({0.f,0.5f*i,0.f});
+		myEngine.mvMatrixStack.pushMatrix(); // foot
+		myEngine.setFlatColor(0.f,0.f,0.f);
+		myEngine.mvMatrixStack.addHomothety(0.5);
+		myEngine.updateMvMatrix();
+		sphere->draw();
+		myEngine.mvMatrixStack.popMatrix(); // foot
+		myEngine.mvMatrixStack.pushMatrix(); // leg
+		myEngine.setFlatColor(0.2f,0.2f,0.8f);
+		myEngine.mvMatrixStack.addTranslation({0.f,0.f,1.f});
+		myEngine.mvMatrixStack.addRotation(-M_PI_2,{1.0,0.0,0.0});
+		myEngine.mvMatrixStack.addHomothety({0.25,1.0,0.25});
+		myEngine.updateMvMatrix();
+		drawClosedCylinder();
+		myEngine.mvMatrixStack.popMatrix(); // leg
+		myEngine.mvMatrixStack.popMatrix(); // Bottom
+	}
+	myEngine.mvMatrixStack.pushMatrix(); // body
+	myEngine.setFlatColor(0.7f,0.f,0.2f);
+	myEngine.mvMatrixStack.addTranslation({0.f,0.f,1.5f});
+	myEngine.mvMatrixStack.addHomothety({0.5,1,1});
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	myEngine.mvMatrixStack.popMatrix(); // body
+
+	myEngine.mvMatrixStack.pushMatrix(); // arm1
+	myEngine.mvMatrixStack.addTranslation({0.f,-1.f,1.5f});
+	myEngine.mvMatrixStack.addRotation(-0.2,{1.0,0.0,0.0});
+	myEngine.mvMatrixStack.addHomothety({0.25,1,0.25});
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	myEngine.mvMatrixStack.popMatrix(); // arm1
+
+	myEngine.mvMatrixStack.pushMatrix(); // arm2
+	myEngine.mvMatrixStack.addTranslation({0.f,0.75f,1.5f});
+	myEngine.mvMatrixStack.addRotation(0.3*sin(float(frameCount)/3.f)+0.3,{1.0,0.0,0.0});
+	myEngine.mvMatrixStack.addHomothety({0.25,1,0.25});
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	myEngine.mvMatrixStack.popMatrix(); // arm2
+
+
+	myEngine.mvMatrixStack.pushMatrix(); // head
+	myEngine.setFlatColor(0.7f,0.5f,0.2f);
+	myEngine.mvMatrixStack.addTranslation({0.f,0.f,3.f});
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	for(int i{-1};i<2;i+=2){
+		myEngine.mvMatrixStack.pushMatrix(); // eye
+		myEngine.mvMatrixStack.addRotation(-0.2,{0.0,1.0,0.0});
+		myEngine.setFlatColor(1.f,1.f,1.f);
+		myEngine.mvMatrixStack.addRotation(0.4*i,{0.0,0.0,1.0});
+		myEngine.mvMatrixStack.addTranslation({0.8f,0.f,0.f});
+		myEngine.mvMatrixStack.addHomothety(0.25);
+		myEngine.updateMvMatrix();
+		sphere->draw();
+		myEngine.setFlatColor(0.f,0.f,0.f);
+		myEngine.mvMatrixStack.addTranslation({0.8f,0.f,0.f});
+		myEngine.mvMatrixStack.addHomothety(0.5);
+		myEngine.updateMvMatrix();
+		sphere->draw();
+		myEngine.mvMatrixStack.popMatrix(); // eye
+	}
+	myEngine.mvMatrixStack.pushMatrix(); // Hat
+	myEngine.setFlatColor(0.f,0.f,0.f);
+	myEngine.mvMatrixStack.addTranslation({0.f,0.f,0.75f});
+	myEngine.mvMatrixStack.pushMatrix(); // rim
+	myEngine.mvMatrixStack.addHomothety({1.2f,1.2f,1.0f});
+	myEngine.updateMvMatrix();
+	cercle.drawShape();
+	myEngine.mvMatrixStack.popMatrix(); // rim
+	myEngine.mvMatrixStack.addHomothety({0.75f,0.75f,1.0f});
+	myEngine.mvMatrixStack.addRotation(M_PI_2,{1.0,0.0,0.0});
+	myEngine.updateMvMatrix();
+	drawClosedCylinder();
+	myEngine.mvMatrixStack.popMatrix(); // Hat
+	myEngine.mvMatrixStack.popMatrix(); // head
+
+	myEngine.mvMatrixStack.pushMatrix(); // Pelle
+	myEngine.setFlatColor(0.8f,0.8f,0.8f);
+	myEngine.mvMatrixStack.addTranslation({0.f,-1.6f,0.f});
+	myEngine.mvMatrixStack.pushMatrix(); // Manche
+	myEngine.mvMatrixStack.addHomothety({0.1f,0.1f,3.0f});
+	myEngine.mvMatrixStack.addRotation(M_PI_2,{1.0,0.0,0.0});
+	myEngine.updateMvMatrix();
+	drawClosedCylinder();
+	myEngine.mvMatrixStack.popMatrix(); // Manche
 	
+	myEngine.mvMatrixStack.addTranslation({-0.5f,0.f,3.f});
+	myEngine.mvMatrixStack.addRotation(-M_PI_2,{0.0,1.0,0.0});
+
+	myEngine.updateMvMatrix();
+	carre.drawShape();
+	myEngine.mvMatrixStack.addTranslation({0.5f,0.f,-0.5f});
+	myEngine.mvMatrixStack.addHomothety({0.5,0.5,1});
+	myEngine.updateMvMatrix();
+	cercle.drawShape();
+	myEngine.mvMatrixStack.popMatrix(); // pelle
+	
+	myEngine.mvMatrixStack.popMatrix(); // all
+}
+
+void drawTrain(){
 	myEngine.mvMatrixStack.pushMatrix(); // all
 	myEngine.mvMatrixStack.addTranslation({0.f,0.f,2*rr+sr});
 	drawWheels();
+	
 	myEngine.mvMatrixStack.pushMatrix(); // base
 	myEngine.mvMatrixStack.addTranslation({5.f,4.f,1.f});
-	//myEngine.mvMatrixStack.addTranslation({0.f,0.f,2.f});
 	myEngine.mvMatrixStack.addHomothety({3.5f,7.f,1.f});
 	myEngine.setFlatColor(0.8,0.8,0.8);
 	myEngine.updateMvMatrix();
 	cube->draw();
 	myEngine.mvMatrixStack.popMatrix(); // base
+
 	myEngine.mvMatrixStack.pushMatrix(); // rampe
 	myEngine.mvMatrixStack.addTranslation({5.f,8.f,1.f});
 	myEngine.mvMatrixStack.addHomothety({3.5f,1.f,1.f});
 	myEngine.updateMvMatrix();
 	drawRamp();
 	myEngine.mvMatrixStack.popMatrix(); // rampe
+
+	myEngine.mvMatrixStack.pushMatrix(); // cylindre
+	myEngine.mvMatrixStack.addTranslation({5.f,4.f,2.5f});
+	myEngine.mvMatrixStack.addHomothety({1.5f,3.5f,1.5f});
+	myEngine.setFlatColor(0.5,0.5,0.5);
+	myEngine.updateMvMatrix();
+	drawClosedCylinder();
+	myEngine.mvMatrixStack.popMatrix(); // cylindre
+
+	myEngine.mvMatrixStack.pushMatrix(); // cheminée
+	myEngine.mvMatrixStack.addTranslation({5.f,7.f,4.6f});
+	myEngine.mvMatrixStack.addRotation(-M_PI_2,{1.0,0.0,0.0});
+	myEngine.setFlatColor(0.3,0.3,0.3);
+	myEngine.mvMatrixStack.addHomothety({0.4f,0.8f,0.4f});
+	myEngine.updateMvMatrix();
+	cylindre->draw();
+	myEngine.mvMatrixStack.addTranslation({0.f,-2.f,0.f});
+	myEngine.mvMatrixStack.addHomothety({2.f,4.f,2.f});
+	myEngine.updateMvMatrix();
+	cone->draw();
+	myEngine.mvMatrixStack.popMatrix(); // cheminée
+
+	myEngine.mvMatrixStack.pushMatrix(); // lumiere
+	myEngine.mvMatrixStack.addTranslation({5.f,7.f,3.f});
+	myEngine.mvMatrixStack.pushMatrix(); // lumiereCyl
+	myEngine.mvMatrixStack.addHomothety(0.6);
+	myEngine.updateMvMatrix();
+	drawClosedCylinder();
+	myEngine.mvMatrixStack.popMatrix(); // lumiereCyl
+	myEngine.setFlatColor(0.8,0.8,0.1);
+	myEngine.mvMatrixStack.addTranslation({0.f,0.5f,0.f});
+	myEngine.mvMatrixStack.addHomothety(0.5);
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	myEngine.mvMatrixStack.popMatrix(); // lumiere
+
+	myEngine.setFlatColor(0.3,0.3,0.3);
+	myEngine.mvMatrixStack.pushMatrix(); // grate
+	myEngine.mvMatrixStack.addTranslation({5.f,7.5f,2.1f});
+	myEngine.updateMvMatrix();
+	drawGrate();
+	myEngine.mvMatrixStack.addTranslation({1.f,-3.5f,0.5f});
+	myEngine.mvMatrixStack.pushMatrix(); // coalgrate
+	myEngine.mvMatrixStack.addRotation(0.4,{0.0,0.0,1.0});
+	myEngine.mvMatrixStack.addTranslation({-1.f,0.f,0.f});
+	myEngine.mvMatrixStack.addHomothety({1.f,1.f,3.f});
+	myEngine.updateMvMatrix();
+	drawGrate();
+	myEngine.mvMatrixStack.popMatrix(); // coalgrate
+	myEngine.mvMatrixStack.addTranslation({-0.5f,1.999f,0.f});
+	myEngine.mvMatrixStack.addRotation(-M_PI_2,{1.0,0.0,0.0});
+	myEngine.mvMatrixStack.addTranslation({-0.5f,0.f,0.f});
+	myEngine.mvMatrixStack.addHomothety({2.f,1.f,4.f});
+	myEngine.updateMvMatrix();
+	carre.drawShape();
+	myEngine.setFlatColor(0.8f,0.4f,0.f);
+	myEngine.mvMatrixStack.addTranslation({0.f,0.f,-0.001f});
+	myEngine.mvMatrixStack.addHomothety({0.8f,0.8f,1.f});
+	myEngine.updateMvMatrix();
+	carre.drawShape();
+	myEngine.mvMatrixStack.popMatrix(); // grate
+	myEngine.setFlatColor(0.f,0.f,0.f);
+	drawCabin();
+
+	myEngine.mvMatrixStack.pushMatrix(); // perso
+	myEngine.mvMatrixStack.addTranslation({5.5f,2.2f,2.f});
+	myEngine.mvMatrixStack.addHomothety(0.6);
+	drawPerso();
+	myEngine.mvMatrixStack.popMatrix(); // perso
+
 	myEngine.mvMatrixStack.popMatrix(); // all
 }
 

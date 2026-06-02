@@ -20,6 +20,7 @@ extern float dist_zoom  ;      // Distance between origin and viewpoint
 /* OpenGL Engine */
 extern GLBI_Engine myEngine;
 
+extern int frameCount;
 
 extern GLBI_Set_Of_Points frame;
 extern GLBI_Set_Of_Points grille;
@@ -42,4 +43,3 @@ void drawFrame();
 void drawClosedCylinder();
 
 void drawScene();
-

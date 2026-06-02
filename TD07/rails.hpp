@@ -13,8 +13,5 @@ extern float sr;
 extern float rr;
 extern float sx;
 
-
-
-
 void initCurved();
 void drawRails();

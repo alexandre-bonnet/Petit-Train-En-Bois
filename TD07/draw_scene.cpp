@@ -10,6 +10,8 @@ float dist_zoom {15.0};      // Distance between origin and viewpoint
 
 GLBI_Engine myEngine;
 
+int frameCount{0};
+
 GLBI_Set_Of_Points frame(3);
 GLBI_Set_Of_Points grille(3);
 GLBI_Convex_2D_Shape ground{3};
@@ -165,4 +167,5 @@ void drawScene() {
 	drawTrain();
 
 	drawGround();
+	frameCount++;
 }
