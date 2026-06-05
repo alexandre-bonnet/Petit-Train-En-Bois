@@ -151,7 +151,7 @@ void initCurved(){
 
 void drawRails(){
 	bool curved{false};
-	int size{int(railsPlacement.size())};
+	int size{static_cast<int>(railsPlacement.size())};
 	float angle{0.f};
 	std::array<int,2> current{};
 	std::array<int,2> prev{};
