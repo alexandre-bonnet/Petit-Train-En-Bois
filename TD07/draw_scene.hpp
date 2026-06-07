@@ -3,10 +3,17 @@
 #include "glbasimac/glbi_engine.hpp"
 #include "glbasimac/glbi_set_of_points.hpp"
 #include "glbasimac/glbi_convex_2D_shape.hpp"
+
+//#define STB_IMAGE_IMPLEMENTATION
+#include "tools/stb_image.h"
+#include "glbasimac/glbi_texture.hpp"
+
 #include "tools/basic_mesh.hpp"
+#include "json.hpp"
 
 
 using namespace glbasimac;
+using json = nlohmann::json;
 
 /* Camera parameters and functions */
 static const float Z_NEAR {0.1f};
@@ -18,6 +25,7 @@ extern float dist_zoom  ;      // Distance between origin and viewpoint
 /* OpenGL Engine */
 extern GLBI_Engine myEngine;
 
+extern int frameCount;
 
 extern GLBI_Set_Of_Points frame;
 extern GLBI_Set_Of_Points grille;
@@ -32,11 +40,16 @@ extern StandardMesh* cone;
 extern std::array<int,2> stationPlacement;
 extern std::vector<std::array<int,2>> railsPlacement;
 
+extern GLBI_Texture texturePull;
+extern GLBI_Texture textureGrass;
+
 void initJson();
 
 void initScene();
 
 void drawFrame();
+void drawClosedCylinder();
 
 void drawScene();
 
+void initTextures();

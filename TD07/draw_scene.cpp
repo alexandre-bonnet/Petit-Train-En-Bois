@@ -3,12 +3,17 @@
 #include "gare.hpp"
 #include "train.hpp"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "tools/stb_image.h"
+
 /// Camera parameters
 float angle_theta {45.0};      // Angle between x axis and viewpoint
 float angle_phy {30.0};      // Angle between z axis and viewpoint
 float dist_zoom {15.0};      // Distance between origin and viewpoint
 
 GLBI_Engine myEngine;
+
+int frameCount{0};
 
 GLBI_Set_Of_Points frame(3);
 GLBI_Set_Of_Points grille(3);
@@ -22,6 +27,10 @@ StandardMesh* cone;
 
 std::array<int,2> stationPlacement{};
 std::vector<std::array<int,2>> railsPlacement{};
+
+GLBI_Texture texturePull{};
+GLBI_Texture textureGrass{};
+
 
 void initGrille(){
 	std::vector<float> grilleFrame{};
@@ -57,14 +66,6 @@ void initFrame(){
 }
 
 void initConvex2dShapes(){
-	{
-	std::vector<float> baseCarre{-50.0,-50.0,0.0,
-								 50.0,-50.0,0.0,
-								 50.0,50.0,0.0,
-								 -50.0,50.0,0.0};
-	ground.initShape(baseCarre);
-	ground.changeNature(GL_TRIANGLE_FAN);
-	}
 	{
 	std::vector<float> points_cercle;
 	int nb_points = 25;
@@ -116,29 +117,88 @@ void initJson(){
 	railsPlacement = data["path"].get<std::vector<std::array<int,2>>>();
 }
 
+void initPullTexture(){
+	int x,y,n;
+	unsigned char * pullImage = stbi_load("../assets/textures/yellow_wool.png",& x,& y,& n,0);
+	
+	if(pullImage==nullptr){
+		std::cerr << "Failed to open image "<<std::endl;
+		exit(1);
+	}
+
+	texturePull.createTexture();
+	texturePull.attachTexture();
+	texturePull.setParameters(GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	texturePull.setParameters(GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	texturePull.loadImage(x,y,n,pullImage);
+	texturePull.detachTexture();
+	stbi_image_free(pullImage);
+}
+
+void initGrassTexture(){
+	int x,y,n;
+	unsigned char * grassImage = stbi_load("../assets/textures/Grass.jpg",& x,& y,& n,0);
+	
+	if(grassImage==nullptr){
+		std::cerr << "Failed to open image "<<std::endl;
+		exit(1);
+	}
+	textureGrass.createTexture();
+	textureGrass.attachTexture();
+	textureGrass.setParameters(GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	textureGrass.setParameters(GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	textureGrass.loadImage(x,y,n,grassImage);
+	textureGrass.detachTexture();
+	stbi_image_free(grassImage);
+}
+
+void initTextures(){
+	initGrassTexture();
+	initPullTexture();
+}
+
 void initScene() {
 	initFrame();
 	initGrille();
 	initCurved();
+	initRamp();
+	initSupport();
 	initJson();
 	initConvex2dShapes();
 	initMeshes();
+	initTextures();
 }
 
 void drawGround(){
 	myEngine.updateMvMatrix();
 	grille.drawSet();
+	myEngine.activateTexturing(true);
+	textureGrass.attachTexture();
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation({0.0f,0.0f,-0.1f});
+	myEngine.mvMatrixStack.addHomothety({100.f,100.f,0.0001f});
 	myEngine.updateMvMatrix();
-	myEngine.setFlatColor(0.2,0.5,0.2);
-	ground.changeNature(GL_TRIANGLE_FAN);
-	ground.drawShape();
+	cube->draw();
 	myEngine.mvMatrixStack.popMatrix(); 
+	textureGrass.detachTexture();
+	myEngine.activateTexturing(false);
 }
 
 void drawFrame() {
 	frame.drawSet();
+}
+
+void drawClosedCylinder(){
+	myEngine.mvMatrixStack.pushMatrix(); // all
+	myEngine.updateMvMatrix();
+	cylindre->draw();
+		myEngine.mvMatrixStack.addRotation(-M_PI_2,{1.0,0.0,0.0});
+		myEngine.updateMvMatrix();
+		cercle.drawShape();
+		myEngine.mvMatrixStack.addTranslation({0.0,0.0,1.0});
+		myEngine.updateMvMatrix();
+		cercle.drawShape();
+	myEngine.mvMatrixStack.popMatrix(); // all
 }
 
 void drawScene() {
@@ -151,4 +211,5 @@ void drawScene() {
 	drawTrain();
 
 	drawGround();
+	frameCount++;
 }
