@@ -3,6 +3,11 @@
 #include "glbasimac/glbi_engine.hpp"
 #include "glbasimac/glbi_set_of_points.hpp"
 #include "glbasimac/glbi_convex_2D_shape.hpp"
+
+//#define STB_IMAGE_IMPLEMENTATION
+#include "tools/stb_image.h"
+#include "glbasimac/glbi_texture.hpp"
+
 #include "tools/basic_mesh.hpp"
 #include "json.hpp"
 
@@ -35,6 +40,9 @@ extern StandardMesh* cone;
 extern std::array<int,2> stationPlacement;
 extern std::vector<std::array<int,2>> railsPlacement;
 
+extern GLBI_Texture texturePull;
+extern GLBI_Texture textureGrass;
+
 void initJson();
 
 void initScene();
@@ -43,3 +51,5 @@ void drawFrame();
 void drawClosedCylinder();
 
 void drawScene();
+
+void initTextures();

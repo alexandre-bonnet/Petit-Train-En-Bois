@@ -8,3 +8,4 @@
 
 void drawTrain();
 void initRamp();
+void initSupport();
