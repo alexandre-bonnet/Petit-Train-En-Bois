@@ -4,12 +4,12 @@
 void drawBushySphere(){
 	myEngine.mvMatrixStack.pushMatrix(); // all
 	sphere->draw();
-	int num = 7;
+	int num = 3;
 	for(int i{0};i<num;i++){
 		for(int j{0};j<num;j++){
 			myEngine.mvMatrixStack.pushMatrix(); // circle
-			myEngine.mvMatrixStack.addRotation(i*M_PI*2/num,{0.0,0.0,1.0});
-			myEngine.mvMatrixStack.addRotation(j*M_PI*2/num,{0.0,1.0,0.0});
+			myEngine.mvMatrixStack.addRotation(i*M_PI*2/num+M_2_PI,{0.0,0.0,1.0});
+			myEngine.mvMatrixStack.addRotation(j*M_PI*2/num+M_2_PI,{0.0,1.0,0.0});
 			myEngine.mvMatrixStack.addTranslation({1.f,0.f,0.f});
 			myEngine.mvMatrixStack.addHomothety(0.5f);
 			myEngine.updateMvMatrix();
