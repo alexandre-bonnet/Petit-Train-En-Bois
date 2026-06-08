@@ -2,6 +2,7 @@
 #include "rails.hpp"
 #include "gare.hpp"
 #include "train.hpp"
+#include "arbres.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "tools/stb_image.h"
@@ -27,6 +28,7 @@ StandardMesh* cone;
 
 std::array<int,2> stationPlacement{};
 std::vector<std::array<int,2>> railsPlacement{};
+std::vector<std::array<int,3>> vegetationPlacement{};
 
 GLBI_Texture texturePull{};
 GLBI_Texture textureGrass{};
@@ -115,6 +117,8 @@ void initJson(){
 	stationPlacement = data["origin"].get<std::array<int,2>>();
 
 	railsPlacement = data["path"].get<std::vector<std::array<int,2>>>();
+
+	vegetationPlacement = data["Vegetation"].get<std::vector<std::array<int,3>>>();
 }
 
 void initPullTexture(){
@@ -176,7 +180,7 @@ void drawGround(){
 	textureGrass.attachTexture();
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation({0.0f,0.0f,-0.1f});
-	myEngine.mvMatrixStack.addHomothety({100.f,100.f,0.0001f});
+	myEngine.mvMatrixStack.addHomothety({100.f,100.f,0.001f});
 	myEngine.updateMvMatrix();
 	cube->draw();
 	myEngine.mvMatrixStack.popMatrix(); 
@@ -209,7 +213,7 @@ void drawScene() {
 	drawRails();
 	drawStation();
 	drawTrain();
-
+	drawEnvironnement();
 	drawGround();
 	frameCount++;
 }

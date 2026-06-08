@@ -39,6 +39,7 @@ extern StandardMesh* cone;
 
 extern std::array<int,2> stationPlacement;
 extern std::vector<std::array<int,2>> railsPlacement;
+extern std::vector<std::array<int,3>> vegetationPlacement;
 
 extern GLBI_Texture texturePull;
 extern GLBI_Texture textureGrass;
