@@ -12,6 +12,8 @@ float angle_theta {45.0};      // Angle between x axis and viewpoint
 float angle_phy {30.0};      // Angle between z axis and viewpoint
 float dist_zoom {15.0};      // Distance between origin and viewpoint
 
+bool enableRealisticLight {false};
+
 GLBI_Engine myEngine;
 
 int frameCount{0};
@@ -210,17 +212,20 @@ void drawScene() {
 
 	drawFrame();
 
-	myEngine.switchToPhongShading();
+	if(enableRealisticLight) {
+		myEngine.switchToPhongShading();
 
-	myEngine.setLightIntensity({1.0, 1.0, 1.0}, 0);
-	myEngine.setShininess(0.0f);
-	myEngine.setSpecularColor({1.0, 1.0, 1.0});
-	myEngine.setAttenuationFactor({1.0, 0.0, 0.0});
-
-	float lightX = 50.f;
-	float lightY = 30.f;
-	float lightZ = 40.f;
-	myEngine.setLightPosition({lightX, lightY, lightZ, 1.0}, 0);
+		myEngine.setLightIntensity({1.0, 1.0, 1.0}, 0);
+		myEngine.setShininess(0.0f);
+		myEngine.setSpecularColor({1.0, 1.0, 1.0});
+		myEngine.setAttenuationFactor({1.0, 0.0, 0.0});
+		
+		
+		float lightX = 50.f;
+		float lightY = 30.f;
+		float lightZ = 40.f;
+		myEngine.setLightPosition({lightX, lightY, lightZ, 1.0}, 0);
+	}
 
 	drawRails();
 	drawStation();
@@ -228,7 +233,9 @@ void drawScene() {
 	drawEnvironnement();
 	drawGround();
 
-	myEngine.switchToFlatShading();
+	if(enableRealisticLight) {
+		myEngine.switchToFlatShading();
+	}
 
 	frameCount++;
 }

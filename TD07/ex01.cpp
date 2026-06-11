@@ -58,6 +58,13 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 			angle_theta -= 1.0;
 			break;
 
+		
+		case GLFW_KEY_J:
+			enableRealisticLight = true;
+			break;
+		case GLFW_KEY_K:
+			enableRealisticLight = false;
+			break;
 		case GLFW_KEY_I :
 			dist_zoom*=0.9;
 			break;

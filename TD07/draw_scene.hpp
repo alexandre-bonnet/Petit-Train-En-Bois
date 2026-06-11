@@ -22,6 +22,8 @@ extern float angle_theta;      // Angle between x axis and viewpoint
 extern float angle_phy  ;      // Angle between z axis and viewpoint
 extern float dist_zoom  ;      // Distance between origin and viewpoint
 
+extern bool enableRealisticLight;
+
 /* OpenGL Engine */
 extern GLBI_Engine myEngine;
 
