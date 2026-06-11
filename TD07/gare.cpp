@@ -4,7 +4,7 @@
 
 void drawPillar(float x, float y) {
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.setFlatColor(1.0, 0.8, 0.7);
+	myEngine.setFlatColor(0.65, 0.45, 0.25);
 	myEngine.mvMatrixStack.addTranslation({x, y, 0.f});
 	myEngine.mvMatrixStack.addHomothety({1.f, 1.f, 8.f});
 	myEngine.updateMvMatrix();
@@ -14,7 +14,7 @@ void drawPillar(float x, float y) {
 
 void drawRoofPart(float x, float rotation) {
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.setFlatColor(0.4, 0.4, 0.4);
+	myEngine.setFlatColor(0.8, 0.75, 0.7);
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation({x, 0.f, 0.f});
 	myEngine.updateMvMatrix();
@@ -41,7 +41,7 @@ void drawRoof() {
 
 void drawRoofClosures() {
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.setFlatColor(0.4, 0.4, 0.4);
+	myEngine.setFlatColor(0.8, 0.75, 0.7);
 	myEngine.mvMatrixStack.addTranslation({0.f, 0.f, 4.f});
 	myEngine.mvMatrixStack.addRotation(M_PI / 4.f, {0.f, 1.f, 0.f});
 	myEngine.updateMvMatrix();
@@ -59,7 +59,7 @@ void drawRoofClosures() {
 
 void drawLiaisionRoofPart(float y, float rotation) {
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.setFlatColor(0.4, 0.4, 0.4);
+	myEngine.setFlatColor(0.8, 0.75, 0.7);
 	myEngine.mvMatrixStack.pushMatrix();
 	myEngine.mvMatrixStack.addTranslation({0.f, y, 0.f});
 	myEngine.updateMvMatrix();
@@ -140,7 +140,7 @@ void drawStone(float angle, float radius, bool noRotation) {
 }
 
 void drawWindowStones() {
-	myEngine.setFlatColor(0.4, 0.4, 0.4);
+	myEngine.setFlatColor(0.8, 0.75, 0.7);
 	for(int i = 0; i < 7; i++) {
 		float angle = (M_PI / 5.f) * i - M_PI / 10.f;
 		float radius = 1.5f;
@@ -154,7 +154,7 @@ void drawWindow(float y) {
 	myEngine.updateMvMatrix();
 	
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.setFlatColor(0.4, 0.4, 1.0);
+	myEngine.setFlatColor(0.65, 0.87, 1.0);
 	myEngine.mvMatrixStack.addHomothety({0.1f, 2.5f, 2.5f});
 	myEngine.updateMvMatrix();
 	cube->draw();
@@ -170,7 +170,7 @@ void drawWindow(float y) {
 	drawWindowStones();
 	
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.setFlatColor(0.4, 0.4, 0.4);
+	myEngine.setFlatColor(0.8, 0.75, 0.7);
 	myEngine.mvMatrixStack.addTranslation({0.f, 0.f, -1.25f});
 	myEngine.mvMatrixStack.addHomothety({1.f, 2.5f, 0.5f});
 	myEngine.updateMvMatrix();
@@ -186,7 +186,7 @@ void drawFacade() {
 	myEngine.updateMvMatrix();
 	
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.setFlatColor(0.4, 0.4, 1.0);
+	myEngine.setFlatColor(0.65, 0.87, 1.0);
 	myEngine.mvMatrixStack.addTranslation({0.f, 0.f, -1.f});
 	myEngine.mvMatrixStack.addHomothety({0.1f, 3.5f, 5.f});
 	myEngine.updateMvMatrix();
@@ -208,7 +208,7 @@ void drawFacade() {
 
 void drawStation(){
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.setFlatColor(1.0, 0.0, 0.0);
+	myEngine.setFlatColor(0.7, 0.3, 0.2);
 
 	myEngine.mvMatrixStack.addTranslation({10.f*stationPlacement[0], 10.f*stationPlacement[1], 0.f});
 	myEngine.mvMatrixStack.addTranslation({5.f, 10.f, 3.f});
@@ -234,7 +234,7 @@ void drawStation(){
 	drawLiaisionRoof();
 
 	myEngine.mvMatrixStack.pushMatrix();
-	myEngine.setFlatColor(0., 1., 0.);
+	myEngine.setFlatColor(0.7, 0.3, 0.2);
 	myEngine.mvMatrixStack.addTranslation({0.f, 0.f, 7.f});
 	myEngine.updateMvMatrix();
 
