@@ -13,6 +13,7 @@ float angle_phy {30.0};      // Angle between z axis and viewpoint
 float dist_zoom {15.0};      // Distance between origin and viewpoint
 
 bool enableRealisticLight {false};
+bool enableTrainLight {true};
 
 GLBI_Engine myEngine;
 
@@ -214,6 +215,12 @@ void drawScene() {
 
 	if(enableRealisticLight) {
 		myEngine.switchToPhongShading();
+
+		static bool secondLightAdded = false;
+		if (!secondLightAdded) {
+			myEngine.addALight({0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0}); // on met sa vraie position /intensité dans train.cpp
+			secondLightAdded = true;
+		}
 
 		myEngine.setLightIntensity({1.0, 1.0, 1.0}, 0);
 		myEngine.setShininess(0.0f);

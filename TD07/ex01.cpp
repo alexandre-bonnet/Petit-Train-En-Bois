@@ -65,6 +65,12 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 		case GLFW_KEY_K:
 			enableRealisticLight = false;
 			break;
+		case GLFW_KEY_Y:
+			enableTrainLight = true;
+			break;
+		case GLFW_KEY_U:
+			enableTrainLight = false;
+			break;
 		case GLFW_KEY_I :
 			dist_zoom*=0.9;
 			break;
