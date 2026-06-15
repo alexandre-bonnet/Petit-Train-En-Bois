@@ -10,7 +10,7 @@ Inspiré de jouets pour enfants.
 
 Le projet est dans le répertoire **TD07** du projet (sauf le JSON, dans `assets/`). Le fichier main est **`ex01.cpp`**.
 
-**!! Si vous êtes sur Mac !!**, il faut aller dans le fichier `ex01.cpp`, ligne 102, et dé-commenter ces lignes :
+**!! Si vous êtes sur Mac !!**, il faut aller dans le fichier `ex01.cpp`, ligne 102, et dé-commenter ces lignes (si elles sont commentées) :
 
 ```cpp
 glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -18,6 +18,8 @@ glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 ```
+
+Sur **n'importe quel système d'exploitation**, si vous avez une erreur au lancement, vous pouvez essayer de les commenter / dé-commenter.
 
 ### Lancer l'extension VSCode CMAKE
 
