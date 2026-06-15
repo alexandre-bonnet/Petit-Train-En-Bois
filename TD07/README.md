@@ -93,3 +93,9 @@ Il y a deux textures dans notre projet : le pull du bonhomme et le sol (voir les
 Les rails et la gare sont placés en fonction du JSON donné. Par défaut : `assets/railPlacement.json`. On peut modifier les placements dans le JSON, ou en donner un autre dans `draw_scene.cpp`, ligne 109.
 
 ## Détails techniques
+
+Pour les rails courbes, nous avons créé deux 8 formes convexes 2d, 4 pour le rail interieur, 4 pour le rail exterieur.
+Ils sont construits avec une boucle et on peut augmenter leur résolution en augmentant num. Ces Shapes n'ont pas d'information normale et sont donc noires quand la lumière est activée (idem pour les arches qui tiennent le toit)
+Pour les dessiner, on input toutes les combinaisons possibles de rail en regardant les rail d'avant et d'après pour choisir l'orientation des rails.
+
+Pour éviter toute duplication de code, nous avons créé des 'formes élémentaires' comme 'ClosedCylinder', un cylindre avec 2 cercles aux extrémités, ou 'BushySphere' pour dessiner les arbres et les buissons
