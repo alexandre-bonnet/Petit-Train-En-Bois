@@ -89,7 +89,7 @@ L'avant du train (la boule jaune) est aussi illuminé. On peut activer / désact
 
 ### Textures
 
-Il y a deux textures dans notre projet : le pull du bonhomme et le sol (voir les images précédentes pour le sol).
+Il y a deux textures dans notre projet : le pull du bonhomme et le sol.
 
 |                                             |                                               |
 | ------------------------------------------- | --------------------------------------------- |
