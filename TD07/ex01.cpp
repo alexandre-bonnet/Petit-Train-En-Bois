@@ -14,6 +14,10 @@ static const unsigned int WINDOW_HEIGHT = 800;
 static const char WINDOW_TITLE[] = "Coco's & Alex's circuit";
 static float aspectRatio = 1.0f;
 
+int xCam{0};
+int yCam{0};
+int zCam{0};
+
 /* Minimal time wanted between two images */
 static const double FRAMERATE_IN_SECONDS = 1. / 30.;
 
@@ -35,7 +39,7 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 {
 	int is_pressed = (action == GLFW_PRESS); 
 	switch(key) {
-		case GLFW_KEY_A :
+		case GLFW_KEY_Q :
 		case GLFW_KEY_ESCAPE :
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
 			break;
@@ -76,6 +80,24 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 			break;
 		case GLFW_KEY_O :
 			dist_zoom*=1.1;
+			break;
+		case GLFW_KEY_W :
+			xCam-=1;
+			break;
+		case GLFW_KEY_S :
+			xCam+=1;
+			break;
+		case GLFW_KEY_A :
+			yCam-=1;
+			break;
+		case GLFW_KEY_D :
+			yCam+=1;
+			break;
+		case GLFW_KEY_LEFT_SHIFT :
+			zCam-=1;
+			break;
+		case GLFW_KEY_SPACE :
+			zCam+=1;
 			break;
 		default: std::cerr<<"Touche non geree "<<key<<std::endl;
 	}
@@ -156,10 +178,10 @@ int main(int /*argc*/, char** /*argv*/)
 		/* Fix camera position */
 		myEngine.mvMatrixStack.loadIdentity();
 		Vector3D pos_camera =
-		Vector3D(dist_zoom*cos(deg2rad(angle_theta))*cos(deg2rad(angle_phy)),
-		dist_zoom*sin(deg2rad(angle_theta))*cos(deg2rad(angle_phy)),
-		dist_zoom*sin(deg2rad(angle_phy)));
-		Vector3D viewed_point = Vector3D(0.0,0.0,0.0);
+		Vector3D(dist_zoom*cos(deg2rad(angle_theta))*cos(deg2rad(angle_phy))+xCam,
+		dist_zoom*sin(deg2rad(angle_theta))*cos(deg2rad(angle_phy))+yCam,
+		dist_zoom*sin(deg2rad(angle_phy))+zCam);
+		Vector3D viewed_point = Vector3D(xCam,yCam,zCam);
 		Vector3D up_vector = Vector3D(0.0,0.0,1.0);
 		Matrix4D viewMatrix = Matrix4D::lookAt(pos_camera,viewed_point,up_vector);
 		myEngine.setViewMatrix(viewMatrix);

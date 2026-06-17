@@ -57,14 +57,22 @@ void drawCurvedRail() {
 
 	myEngine.mvMatrixStack.pushMatrix(); // rails
 	myEngine.setFlatColor(0.7,0.7,0.7);
+	myEngine.setNormalForConvex2DShape(Vector3D(0.0f, 0.0f, 1.0f));
 	inRailTop.drawShape();
+	myEngine.setNormalForConvex2DShape(Vector3D(0.0f, 0.0f, -1.0f));
 	inRailBottom.drawShape();
+	myEngine.setNormalForConvex2DShape(Vector3D(-1.0f, 0.0f, 0.0f));
 	inRailNear.drawShape();
+	myEngine.setNormalForConvex2DShape(Vector3D(1.0f, 0.0f, 0.0f));
 	inRailFar.drawShape();
 
+	myEngine.setNormalForConvex2DShape(Vector3D(0.0f, 0.0f, 1.0f));
 	outRailTop.drawShape();
+	myEngine.setNormalForConvex2DShape(Vector3D(0.0f, 0.0f, -1.0f));
 	outRailBottom.drawShape();
+	myEngine.setNormalForConvex2DShape(Vector3D(-1.0f, 0.0f, 0.0f));
 	outRailNear.drawShape();
+	myEngine.setNormalForConvex2DShape(Vector3D(1.0f, 0.0f, 0.0f));
 	outRailFar.drawShape();
 	myEngine.mvMatrixStack.popMatrix(); // rails
 

@@ -310,6 +310,76 @@ void drawPerso(){
 	myEngine.mvMatrixStack.popMatrix(); // all
 }
 
+void drawSmokeParticle(){
+	myEngine.mvMatrixStack.pushMatrix(); // all
+	myEngine.updateMvMatrix();
+	sphere->draw();
+
+	myEngine.mvMatrixStack.pushMatrix(); // sphere2
+	myEngine.mvMatrixStack.addRotation(0.4,{1.0,0.0,0.0});
+	myEngine.mvMatrixStack.addTranslation({0.f,1.f,0.f});
+	myEngine.mvMatrixStack.addHomothety(0.7f);
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	myEngine.mvMatrixStack.popMatrix(); // sphere2
+
+	myEngine.mvMatrixStack.pushMatrix(); // sphere3
+	myEngine.mvMatrixStack.addRotation(0.8,{1.0,0.0,0.0});
+	myEngine.mvMatrixStack.addRotation(-3.1,{0.0,0.0,1.0});
+	myEngine.mvMatrixStack.addTranslation({0.f,1.f,0.f});
+	myEngine.mvMatrixStack.addHomothety(0.4f);
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	myEngine.mvMatrixStack.popMatrix(); // sphere3
+	myEngine.mvMatrixStack.popMatrix(); // all
+}
+
+void drawSmoke(){
+	int animTime = 200;
+	myEngine.mvMatrixStack.pushMatrix(); // all
+	for(int i{0};i<animTime;i+=animTime/4){
+		int newFrame = (frameCount+i)%(animTime);
+		myEngine.mvMatrixStack.pushMatrix(); // bubble
+		myEngine.mvMatrixStack.addTranslation({0.f,0.f,12.f*newFrame/float(animTime)});
+		myEngine.mvMatrixStack.addHomothety((animTime-newFrame)/(float(animTime)*1.5));
+		myEngine.updateMvMatrix();
+
+
+		myEngine.mvMatrixStack.pushMatrix(); // all
+	myEngine.updateMvMatrix();
+	sphere->draw();
+
+	myEngine.mvMatrixStack.pushMatrix(); // sphere2
+	myEngine.mvMatrixStack.addRotation(0.4,{1.0,0.0,0.0});
+	if(newFrame<animTime/4){
+		myEngine.mvMatrixStack.addTranslation({0.f,4*newFrame/float(animTime),0.f});
+	} else {
+		myEngine.mvMatrixStack.addTranslation({0.f,1.f,0.f});
+	}
+	myEngine.mvMatrixStack.addHomothety(0.7f);
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	myEngine.mvMatrixStack.popMatrix(); // sphere2
+
+	myEngine.mvMatrixStack.pushMatrix(); // sphere3
+	myEngine.mvMatrixStack.addRotation(0.8,{1.0,0.0,0.0});
+	myEngine.mvMatrixStack.addRotation(-3.1,{0.0,0.0,1.0});
+	if(newFrame<animTime/4){
+		myEngine.mvMatrixStack.addTranslation({0.f,4*newFrame/float(animTime),0.f});
+	} else {
+		myEngine.mvMatrixStack.addTranslation({0.f,1.f,0.f});
+	}
+	myEngine.mvMatrixStack.addHomothety(0.4f);
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	myEngine.mvMatrixStack.popMatrix(); // sphere3
+	myEngine.mvMatrixStack.popMatrix(); // all
+
+
+		myEngine.mvMatrixStack.popMatrix(); // bubble
+	}
+	myEngine.mvMatrixStack.popMatrix(); // all
+}
 void drawTrain(){
 	myEngine.mvMatrixStack.pushMatrix(); // all
 	myEngine.mvMatrixStack.addTranslation({0.f,0.f,2*rr+sr});
@@ -409,5 +479,11 @@ void drawTrain(){
 	myEngine.mvMatrixStack.addHomothety(0.6);
 	drawPerso();
 	myEngine.mvMatrixStack.popMatrix(); // perso
+
+	myEngine.mvMatrixStack.pushMatrix(); // smoke
+	myEngine.mvMatrixStack.addTranslation({5.f,7.f,5.8f});
+	myEngine.setFlatColor(0.8f,0.8f,0.8f);
+	drawSmoke();
+	myEngine.mvMatrixStack.popMatrix(); // smoke
 	myEngine.mvMatrixStack.popMatrix(); // all
 }

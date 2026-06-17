@@ -55,7 +55,13 @@ Les flèches pour tourner autour de la scène
 
 `L`, `P` pour activer / désactiver la visualisation des arêtes
 
-`Q` pour quitter
+`Z`, `S` pour avancer/reculer
+
+`Q`, `D` pour aller à gauche/droite
+
+`SPACE`, `L SHIFT` pour aller en haut/bas
+
+`ESC` pour quitter
 
 ## Résultats obtenus
 
@@ -71,6 +77,8 @@ Nous avons modélisé les rails et fait un parcours, modélisé un train avec un
 ### Animation
 
 Le bras du bonhomme est animé ! Il fait coucou aux personnes à quai.
+
+De la fumée sor également du train, chaque 'particle' pars d'une simple boule puis lafumée s'éparpille un peu avant de disparaitre
 
 ### Illumination
 
