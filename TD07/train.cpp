@@ -310,6 +310,53 @@ void drawPerso(){
 	myEngine.mvMatrixStack.popMatrix(); // all
 }
 
+void drawSmoke(){
+	int animTime = 200;
+	myEngine.mvMatrixStack.pushMatrix(); // all
+	for(int i{0};i<animTime;i+=animTime/4){
+		int newFrame = (frameCount+i)%(animTime);
+		myEngine.mvMatrixStack.pushMatrix(); // bubble
+		myEngine.mvMatrixStack.addTranslation({0.f,0.f,12.f*newFrame/float(animTime)});
+		myEngine.mvMatrixStack.addHomothety((animTime-newFrame)/(float(animTime)*1.5));
+		myEngine.updateMvMatrix();
+
+
+		myEngine.mvMatrixStack.pushMatrix(); // all
+	myEngine.updateMvMatrix();
+	sphere->draw();
+
+	myEngine.mvMatrixStack.pushMatrix(); // sphere2
+	myEngine.mvMatrixStack.addRotation(0.4,{1.0,0.0,0.0});
+	if(newFrame<animTime/2){
+		myEngine.mvMatrixStack.addTranslation({0.f,2*newFrame/float(animTime),0.f});
+	} else {
+		myEngine.mvMatrixStack.addTranslation({0.f,1.f,0.f});
+	}
+	myEngine.mvMatrixStack.addHomothety(0.7f);
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	myEngine.mvMatrixStack.popMatrix(); // sphere2
+
+	myEngine.mvMatrixStack.pushMatrix(); // sphere3
+	myEngine.mvMatrixStack.addRotation(0.8,{1.0,0.0,0.0});
+	myEngine.mvMatrixStack.addRotation(-3.1,{0.0,0.0,1.0});
+	if(newFrame<animTime/2){
+		myEngine.mvMatrixStack.addTranslation({0.f,2*newFrame/float(animTime),0.f});
+	} else {
+		myEngine.mvMatrixStack.addTranslation({0.f,1.f,0.f});
+	}
+	myEngine.mvMatrixStack.addHomothety(0.4f);
+	myEngine.updateMvMatrix();
+	sphere->draw();
+	myEngine.mvMatrixStack.popMatrix(); // sphere3
+	myEngine.mvMatrixStack.popMatrix(); // all
+
+
+		myEngine.mvMatrixStack.popMatrix(); // bubble
+	}
+	myEngine.mvMatrixStack.popMatrix(); // all
+}
+
 void placeTrainLight() {
 	if(enableRealisticLight && enableTrainLight) {
 		myEngine.setLightIntensity({0.4, 0.4, 0.0}, 1);
