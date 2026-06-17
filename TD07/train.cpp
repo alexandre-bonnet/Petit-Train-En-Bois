@@ -310,76 +310,20 @@ void drawPerso(){
 	myEngine.mvMatrixStack.popMatrix(); // all
 }
 
-void drawSmokeParticle(){
-	myEngine.mvMatrixStack.pushMatrix(); // all
-	myEngine.updateMvMatrix();
-	sphere->draw();
-
-	myEngine.mvMatrixStack.pushMatrix(); // sphere2
-	myEngine.mvMatrixStack.addRotation(0.4,{1.0,0.0,0.0});
-	myEngine.mvMatrixStack.addTranslation({0.f,1.f,0.f});
-	myEngine.mvMatrixStack.addHomothety(0.7f);
-	myEngine.updateMvMatrix();
-	sphere->draw();
-	myEngine.mvMatrixStack.popMatrix(); // sphere2
-
-	myEngine.mvMatrixStack.pushMatrix(); // sphere3
-	myEngine.mvMatrixStack.addRotation(0.8,{1.0,0.0,0.0});
-	myEngine.mvMatrixStack.addRotation(-3.1,{0.0,0.0,1.0});
-	myEngine.mvMatrixStack.addTranslation({0.f,1.f,0.f});
-	myEngine.mvMatrixStack.addHomothety(0.4f);
-	myEngine.updateMvMatrix();
-	sphere->draw();
-	myEngine.mvMatrixStack.popMatrix(); // sphere3
-	myEngine.mvMatrixStack.popMatrix(); // all
+void placeTrainLight() {
+	if(enableRealisticLight && enableTrainLight) {
+		myEngine.setLightIntensity({0.4, 0.4, 0.0}, 1);
+		
+		float lightX = 5.f;
+		float lightY = 8.8f;
+		float lightZ = 3.f + 2*rr + sr;
+		myEngine.setLightPosition({lightX, lightY, lightZ, 1.0}, 1);
+	}
+	if(!enableTrainLight) {
+		myEngine.setLightIntensity({0.0, 0.0, 0.0}, 1);
+	}
 }
 
-void drawSmoke(){
-	int animTime = 200;
-	myEngine.mvMatrixStack.pushMatrix(); // all
-	for(int i{0};i<animTime;i+=animTime/4){
-		int newFrame = (frameCount+i)%(animTime);
-		myEngine.mvMatrixStack.pushMatrix(); // bubble
-		myEngine.mvMatrixStack.addTranslation({0.f,0.f,12.f*newFrame/float(animTime)});
-		myEngine.mvMatrixStack.addHomothety((animTime-newFrame)/(float(animTime)*1.5));
-		myEngine.updateMvMatrix();
-
-
-		myEngine.mvMatrixStack.pushMatrix(); // all
-	myEngine.updateMvMatrix();
-	sphere->draw();
-
-	myEngine.mvMatrixStack.pushMatrix(); // sphere2
-	myEngine.mvMatrixStack.addRotation(0.4,{1.0,0.0,0.0});
-	if(newFrame<animTime/4){
-		myEngine.mvMatrixStack.addTranslation({0.f,4*newFrame/float(animTime),0.f});
-	} else {
-		myEngine.mvMatrixStack.addTranslation({0.f,1.f,0.f});
-	}
-	myEngine.mvMatrixStack.addHomothety(0.7f);
-	myEngine.updateMvMatrix();
-	sphere->draw();
-	myEngine.mvMatrixStack.popMatrix(); // sphere2
-
-	myEngine.mvMatrixStack.pushMatrix(); // sphere3
-	myEngine.mvMatrixStack.addRotation(0.8,{1.0,0.0,0.0});
-	myEngine.mvMatrixStack.addRotation(-3.1,{0.0,0.0,1.0});
-	if(newFrame<animTime/4){
-		myEngine.mvMatrixStack.addTranslation({0.f,4*newFrame/float(animTime),0.f});
-	} else {
-		myEngine.mvMatrixStack.addTranslation({0.f,1.f,0.f});
-	}
-	myEngine.mvMatrixStack.addHomothety(0.4f);
-	myEngine.updateMvMatrix();
-	sphere->draw();
-	myEngine.mvMatrixStack.popMatrix(); // sphere3
-	myEngine.mvMatrixStack.popMatrix(); // all
-
-
-		myEngine.mvMatrixStack.popMatrix(); // bubble
-	}
-	myEngine.mvMatrixStack.popMatrix(); // all
-}
 void drawTrain(){
 	myEngine.mvMatrixStack.pushMatrix(); // all
 	myEngine.mvMatrixStack.addTranslation({0.f,0.f,2*rr+sr});
@@ -421,18 +365,6 @@ void drawTrain(){
 	cone->draw();
 	myEngine.mvMatrixStack.popMatrix(); // cheminée
 
-	if(enableRealisticLight && enableTrainLight) {
-		myEngine.setLightIntensity({0.4, 0.4, 0.0}, 1);
-		
-		float lightX = 5.f;
-		float lightY = 8.8f;
-		float lightZ = 3.f + 2*rr + sr;
-		myEngine.setLightPosition({lightX, lightY, lightZ, 1.0}, 1);
-	}
-	if(!enableTrainLight) {
-		myEngine.setLightIntensity({0.0, 0.0, 0.0}, 1);
-	}
-
 	myEngine.mvMatrixStack.pushMatrix(); // lumiere
 	myEngine.mvMatrixStack.addTranslation({5.f,7.f,3.f});
 	myEngine.mvMatrixStack.pushMatrix(); // lumiereCyl
@@ -446,6 +378,8 @@ void drawTrain(){
 	myEngine.updateMvMatrix();
 	sphere->draw();
 	myEngine.mvMatrixStack.popMatrix(); // lumiere
+
+	placeTrainLight();
 
 	myEngine.mvMatrixStack.pushMatrix(); // grate
 	myEngine.mvMatrixStack.addTranslation({5.f,7.5f,2.1f});

@@ -208,11 +208,7 @@ void drawClosedCylinder(){
 	myEngine.mvMatrixStack.popMatrix(); // all
 }
 
-void drawScene() {
-	glPointSize(10.0);
-
-	drawFrame();
-
+void initLights() {
 	if(enableRealisticLight) {
 		myEngine.switchToPhongShading();
 
@@ -233,6 +229,14 @@ void drawScene() {
 		float lightZ = 40.f;
 		myEngine.setLightPosition({lightX, lightY, lightZ, 1.0}, 0);
 	}
+}
+
+void drawScene() {
+	glPointSize(10.0);
+
+	drawFrame();
+
+	initLights();
 
 	drawRails();
 	drawStation();
