@@ -310,6 +310,20 @@ void drawPerso(){
 	myEngine.mvMatrixStack.popMatrix(); // all
 }
 
+void placeTrainLight() {
+	if(enableRealisticLight && enableTrainLight) {
+		myEngine.setLightIntensity({0.4, 0.4, 0.0}, 1);
+		
+		float lightX = 5.f;
+		float lightY = 8.8f;
+		float lightZ = 3.f + 2*rr + sr;
+		myEngine.setLightPosition({lightX, lightY, lightZ, 1.0}, 1);
+	}
+	if(!enableTrainLight) {
+		myEngine.setLightIntensity({0.0, 0.0, 0.0}, 1);
+	}
+}
+
 void drawTrain(){
 	myEngine.mvMatrixStack.pushMatrix(); // all
 	myEngine.mvMatrixStack.addTranslation({0.f,0.f,2*rr+sr});
@@ -351,18 +365,6 @@ void drawTrain(){
 	cone->draw();
 	myEngine.mvMatrixStack.popMatrix(); // cheminée
 
-	if(enableRealisticLight && enableTrainLight) {
-		myEngine.setLightIntensity({0.4, 0.4, 0.0}, 1);
-		
-		float lightX = 5.f;
-		float lightY = 8.8f;
-		float lightZ = 3.f + 2*rr + sr;
-		myEngine.setLightPosition({lightX, lightY, lightZ, 1.0}, 1);
-	}
-	if(!enableTrainLight) {
-		myEngine.setLightIntensity({0.0, 0.0, 0.0}, 1);
-	}
-
 	myEngine.mvMatrixStack.pushMatrix(); // lumiere
 	myEngine.mvMatrixStack.addTranslation({5.f,7.f,3.f});
 	myEngine.mvMatrixStack.pushMatrix(); // lumiereCyl
@@ -376,6 +378,8 @@ void drawTrain(){
 	myEngine.updateMvMatrix();
 	sphere->draw();
 	myEngine.mvMatrixStack.popMatrix(); // lumiere
+
+	placeTrainLight();
 
 	myEngine.mvMatrixStack.pushMatrix(); // grate
 	myEngine.mvMatrixStack.addTranslation({5.f,7.5f,2.1f});
