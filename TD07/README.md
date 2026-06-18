@@ -51,9 +51,7 @@ cd bin
 
 Les flèches pour regarder à droite ou à gauche
 
-`E`, `D` pour monter / descendre
-
-`S`, `F` pour aller à droite / à gauche
+`E`, `D`, `S`, `F` pour monter / descendre, et aller à droite / à gauche
 
 `J`, `K` pour activer / désactiver le mode réaliste (pour les lumières)
 
@@ -74,9 +72,6 @@ Nous avons modélisé les rails et fait un parcours, modélisé un train avec un
 | ------------------------------------------ | -------------------------------------------- |
 | ![Scène globale](images_rapport/image.png) | ![gare et train](images_rapport/image-0.png) |
 | ![train](images_rapport/image-1.png)       | ![Rails](images_rapport/image-2.png)         |
-
-<br />
-<br />
 
 ### Animation
 
