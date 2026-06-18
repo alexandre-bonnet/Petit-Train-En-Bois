@@ -59,7 +59,6 @@ Les flèches pour regarder à droite ou à gauche
 
 `L`, `P` pour activer / désactiver la visualisation des arêtes
 
-
 `ESC` pour quitter
 
 ## Résultats obtenus
