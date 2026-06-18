@@ -225,10 +225,7 @@ void initLights() {
 		}
 
 		myEngine.setLightIntensity({1.0, 1.0, 1.0}, 0);
-		myEngine.setShininess(0.0f);
-		myEngine.setSpecularColor({1.0, 1.0, 1.0});
 		myEngine.setAttenuationFactor({1.0, 0.0, 0.0});
-		
 		
 		float lightX = 50.f;
 		float lightY = 30.f;
