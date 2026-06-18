@@ -61,11 +61,6 @@ Les flèches pour regarder à droite ou à gauche
 
 `L`, `P` pour activer / désactiver la visualisation des arêtes
 
-`Z`, `S` pour avancer/reculer
-
-`Q`, `D` pour aller à gauche/droite
-
-`SPACE`, `L SHIFT` pour aller en haut/bas
 
 `ESC` pour quitter
 
