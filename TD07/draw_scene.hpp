@@ -3,6 +3,7 @@
 #include "glbasimac/glbi_engine.hpp"
 #include "glbasimac/glbi_set_of_points.hpp"
 #include "glbasimac/glbi_convex_2D_shape.hpp"
+#include "tools/camera.hpp"
 
 //#define STB_IMAGE_IMPLEMENTATION
 #include "tools/stb_image.h"
@@ -18,9 +19,10 @@ using json = nlohmann::json;
 /* Camera parameters and functions */
 static const float Z_NEAR {0.1f};
 static const float Z_FAR {500.f};
-extern float angle_theta;      // Angle between x axis and viewpoint
-extern float angle_phy  ;      // Angle between z axis and viewpoint
-extern float dist_zoom  ;      // Distance between origin and viewpoint
+// extern float angle_theta;      // Angle between x axis and viewpoint
+// extern float angle_phy  ;      // Angle between z axis and viewpoint
+// extern float dist_zoom  ;      // Distance between origin and viewpoint
+extern STP3D::FPSCamera camera;
 
 extern bool enableRealisticLight;
 extern bool enableTrainLight;

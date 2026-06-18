@@ -46,20 +46,6 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 		case GLFW_KEY_P:
 			if (is_pressed) glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 			break;
-		case GLFW_KEY_UP :
-			angle_phy += 1.0;
-			break;
-		case GLFW_KEY_DOWN :
-			angle_phy -= 1.0;
-			break;
-		case GLFW_KEY_LEFT :
-			angle_theta += 1.0;
-			break;
-		case GLFW_KEY_RIGHT :
-			angle_theta -= 1.0;
-			break;
-
-		
 		case GLFW_KEY_J:
 			enableRealisticLight = true;
 			break;
@@ -73,10 +59,28 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 			enableTrainLight = false;
 			break;
 		case GLFW_KEY_I :
-			dist_zoom*=0.9;
+			camera.stepFront(0.5f);
 			break;
 		case GLFW_KEY_O :
-			dist_zoom*=1.1;
+			camera.stepBack(0.5f);
+			break;
+		case GLFW_KEY_F :
+			camera.stepRight(0.5f);
+			break;
+		case GLFW_KEY_S :
+			camera.stepLeft(0.5f);
+			break;
+		case GLFW_KEY_E :
+			camera.stepUp(0.5f);
+			break;
+		case GLFW_KEY_D :
+			camera.stepDown(0.5f);
+			break;
+		case GLFW_KEY_LEFT :
+			camera.lookLeft(2.0f);
+			break;
+		case GLFW_KEY_RIGHT :
+			camera.lookRight(2.0f);
 			break;
 		default: std::cerr<<"Touche non geree "<<key<<std::endl;
 	}
@@ -156,14 +160,17 @@ int main(int /*argc*/, char** /*argv*/)
 
 		/* Fix camera position */
 		myEngine.mvMatrixStack.loadIdentity();
-		Vector3D pos_camera =
-		Vector3D(dist_zoom*cos(deg2rad(angle_theta))*cos(deg2rad(angle_phy)),
-		dist_zoom*sin(deg2rad(angle_theta))*cos(deg2rad(angle_phy)),
-		dist_zoom*sin(deg2rad(angle_phy)));
-		Vector3D viewed_point = Vector3D(0.0,0.0,0.0);
-		Vector3D up_vector = Vector3D(0.0,0.0,1.0);
-		Matrix4D viewMatrix = Matrix4D::lookAt(pos_camera,viewed_point,up_vector);
-		myEngine.setViewMatrix(viewMatrix);
+		// Vector3D pos_camera =
+		// Vector3D(dist_zoom*cos(deg2rad(angle_theta))*cos(deg2rad(angle_phy)),
+		// dist_zoom*sin(deg2rad(angle_theta))*cos(deg2rad(angle_phy)),
+		// dist_zoom*sin(deg2rad(angle_phy)));
+		// Vector3D viewed_point = Vector3D(0.0,0.0,0.0);
+		// Vector3D up_vector = Vector3D(0.0,0.0,1.0);
+		// Matrix4D viewMatrix = Matrix4D::lookAt(pos_camera,viewed_point,up_vector);
+		// myEngine.setViewMatrix(viewMatrix);
+
+		myEngine.setViewMatrix(camera.returnViewMatrix());
+		
 		myEngine.updateMvMatrix();
 		
 		drawScene();

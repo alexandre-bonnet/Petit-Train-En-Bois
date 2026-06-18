@@ -47,9 +47,13 @@ cd bin
 
 ## Commandes utilisateurs
 
-`I`, `O` pour zoomer / dé-zoomer
+`I`, `O` pour avancer / reculer
 
-Les flèches pour tourner autour de la scène
+Les flèches pour regarder à droite ou à gauche
+
+`E`, `D` pour monter / descendre
+
+`S`, `F` pour aller à droite / à gauche
 
 `J`, `K` pour activer / désactiver le mode réaliste (pour les lumières)
 
@@ -106,6 +110,10 @@ Il y a deux textures dans notre projet : le pull du bonhomme et le sol.
 ### Prise en compte du JSON
 
 Les rails et la gare sont placés en fonction du JSON donné. Par défaut : `assets/railPlacement.json`. On peut modifier les placements dans le JSON, ou en donner un autre dans `draw_scene.cpp`, ligne 109.
+
+### Caméra FPS
+
+La caméra de base a été remplacé par une caméra FPS, depuis les librairies données dans third_party.
 
 <br />
 

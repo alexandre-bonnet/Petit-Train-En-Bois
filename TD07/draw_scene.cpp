@@ -8,9 +8,15 @@
 #include "tools/stb_image.h"
 
 /// Camera parameters
-float angle_theta {45.0};      // Angle between x axis and viewpoint
-float angle_phy {30.0};      // Angle between z axis and viewpoint
-float dist_zoom {15.0};      // Distance between origin and viewpoint
+// float angle_theta {45.0};      // Angle between x axis and viewpoint
+// float angle_phy {30.0};      // Angle between z axis and viewpoint
+// float dist_zoom {15.0};      // Distance between origin and viewpoint
+
+STP3D::FPSCamera camera(
+	STP3D::Vector3D(10.0, 10.0, 8.0),
+	STP3D::Vector3D(-1.0, -1.0, -0.5),
+	STP3D::Vector3D(0.0, 0.0, 1.0)
+);
 
 bool enableRealisticLight {false};
 bool enableTrainLight {true};
